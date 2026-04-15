@@ -93,12 +93,6 @@ No additional setup or dependencies are required.
 
 ---
 
-## 📸 Screenshots
-
-*(Add screenshots of your project here for better presentation)*
-
----
-
 ## 🚀 Future Scope
 
 * Support for user-defined PDA inputs
@@ -111,8 +105,9 @@ No additional setup or dependencies are required.
 
 ## 👨‍💻 Author
 
-**Your Name**
-B.Tech Student – Theory of Automata and Formal Languages
+**HARSH**
+ROLL NO- 2024UCS1550
+CSE-1
 
 ---
 
