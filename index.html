@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pushdown Automaton Simulator</title>
+  <link rel="stylesheet" href="style-2.css" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <div class="scanline"></div>
+
+  <div class="container">
+    <header>
+      <div class="header-icon">⟨ PDA ⟩</div>
+      <h1>Pushdown Automaton Simulator</h1>
+      <p class="subtitle">Theory of Automata &amp; Formal Languages</p>
+    </header>
+
+    <!-- Controls -->
+    <section class="card" id="controls-card">
+      <div class="card-title">⌨ Input Configuration</div>
+      <div class="controls-grid">
+        <div class="field">
+          <label for="language-select">Language</label>
+          <select id="language-select">
+            <option value="anbn">L = { aⁿbⁿ | n ≥ 1 }</option>
+            <option value="palindrome">L = { wcwᴿ | w ∈ {a,b}* }</option>
+            <option value="anbncn">L = { aⁿbⁿcⁿ | n ≥ 1 } (CFG only)</option>
+            <option value="brackets">L = Balanced Parentheses / Brackets - ()[]</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="input-string">Input String</label>
+          <input type="text" id="input-string" placeholder="e.g. aabb" spellcheck="false"/>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btn-start">▶ Start</button>
+        <button class="btn btn-secondary" id="btn-next" disabled>⏭ Next Step</button>
+        <button class="btn btn-ghost" id="btn-reset">↺ Reset</button>
+      </div>
+    </section>
+
+    <!-- State / Stack / Action -->
+    <section class="card" id="status-card">
+      <div class="card-title">⚙ Machine Status</div>
+      <div class="status-and-stack">
+        <div class="status-col">
+          <div class="status-grid-v">
+            <div class="status-box">
+              <div class="status-label">Current State</div>
+              <div class="status-value" id="current-state">q0</div>
+            </div>
+            <div class="status-box">
+              <div class="status-label">Last Action</div>
+              <div class="status-value action" id="last-action">—</div>
+            </div>
+            <div class="status-box">
+              <div class="status-label">Head Position</div>
+              <div class="tape-display" id="tape-display">—</div>
+            </div>
+          </div>
+        </div>
+        <div class="stack-col">
+          <div class="stack-label-row">
+            <span class="status-label">Stack</span>
+            <span class="stack-hint">↑ TOP</span>
+          </div>
+          <div class="stack-visual" id="stack-display">
+            <div class="stack-cell bottom-cell">Z₀</div>
+          </div>
+          <div class="stack-base-bar"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- State Diagram -->
+    <section class="card" id="diagram-card">
+      <div class="card-title">◈ State Diagram</div>
+      <canvas id="state-diagram" width="760" height="230" style="width:100%;height:auto;"></canvas>
+    </section>
+
+    <!-- Steps Log -->
+    <section class="card" id="log-card">
+      <div class="card-title">📋 Steps Log</div>
+      <div class="log-container" id="steps-log">
+        <div class="log-placeholder">Run a simulation to see step-by-step execution...</div>
+      </div>
+    </section>
+
+    <!-- Result -->
+    <section class="result-banner" id="result-banner">
+      <span id="result-text">—</span>
+    </section>
+
+    <!-- Language Description -->
+    <section class="card" id="info-card">
+      <div class="card-title">ℹ Language Description</div>
+      <div id="lang-description" class="lang-desc">
+        Select a language above to see its formal definition and transition rules.
+      </div>
+    </section>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
