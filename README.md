@@ -106,8 +106,8 @@ No additional setup or dependencies are required.
 ## 👨‍💻 Author
 
 **HARSH**
-ROLL NO- 2024UCS1550
-CSE-1
+* ROLL NO- 2024UCS1550
+* CSE-1
 
 ---
 
