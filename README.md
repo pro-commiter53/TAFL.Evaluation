@@ -78,3 +78,8 @@ It also gave me some hands-on experience with structuring logic in JavaScript an
 3. Start testing different input strings
 
 No setup or installation is required.
+
+---
+
+## 🌐 Live Demo
+https://pro-commiter53.github.io/TAFL.Evaluation/
