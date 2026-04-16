@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PDA Simulator — Pushdown Automaton</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="page-banner">
+  <span class="banner-icon">⊢</span>
+  <span class="banner-title">Pushdown Automaton Simulator</span>
+  <span class="banner-subtitle">Context-Free Language Recognizer</span>
+</header>
+
+<div class="page-wrapper">
+
+  <aside class="sidebar">
+
+    <!-- §1 Introduction -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-icon blue">📖</div>
+        <span class="card-title">What is a PDA?</span>
+      </div>
+      <div class="card-body">
+        <p class="intro-text">
+          A <strong>Pushdown Automaton (PDA)</strong> is a computational model that extends a finite automaton with an auxiliary <strong>stack</strong>. This stack gives the PDA unlimited memory, allowing it to recognize <strong>context-free languages</strong> — a strictly broader class than regular languages.
+        </p>
+        <p class="intro-text" style="margin-top:10px;">
+          At each step, the PDA reads an input symbol, examines the stack top, and — based on a <strong>transition function</strong> — changes state and pushes or pops symbols.
+        </p>
+        <div class="definition-block">
+          <div><span class="def-label">M =</span> (Q, Σ, Γ, δ, q₀, Z₀, F)</div>
+          <div><span class="def-label">Q</span> — finite set of states</div>
+          <div><span class="def-label">Σ</span> — input alphabet</div>
+          <div><span class="def-label">Γ</span> — stack alphabet</div>
+          <div><span class="def-label">δ</span> — transition function</div>
+          <div><span class="def-label">q₀</span> — initial state</div>
+          <div><span class="def-label">Z₀</span> — initial stack symbol</div>
+          <div><span class="def-label">F</span> — set of accept states</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Language Description -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-icon teal">𝐿</div>
+        <span class="card-title">Language Description</span>
+      </div>
+      <div class="card-body" id="langDescPanel">
+        <div class="lang-badge" id="langBadge">L₁</div>
+        <p class="lang-description" id="langDesc">Select a language to see its description.</p>
+        <div class="lang-formal" id="langFormal"></div>
+      </div>
+    </div>
+
+    <!-- PDA Formal Definition -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-icon purple">δ</div>
+        <span class="card-title">PDA Definition</span>
+      </div>
+      <div class="card-body">
+        <div class="def-grid" id="pdaDefGrid">
+          <div class="def-item">
+            <div class="def-item-key">Q (States)</div>
+            <div class="def-item-val" id="def-Q">—</div>
+          </div>
+          <div class="def-item">
+            <div class="def-item-key">Σ (Input Alphabet)</div>
+            <div class="def-item-val" id="def-Sigma">—</div>
+          </div>
+          <div class="def-item">
+            <div class="def-item-key">Γ (Stack Alphabet)</div>
+            <div class="def-item-val" id="def-Gamma">—</div>
+          </div>
+          <div class="def-item">
+            <div class="def-item-key">q₀ (Start State)</div>
+            <div class="def-item-val" id="def-q0">—</div>
+          </div>
+          <div class="def-item">
+            <div class="def-item-key">Z₀ (Stack Bottom)</div>
+            <div class="def-item-val" id="def-Z0">—</div>
+          </div>
+          <div class="def-item">
+            <div class="def-item-key">F (Accept States)</div>
+            <div class="def-item-val" id="def-F">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transition Table -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-icon amber">⇒</div>
+        <span class="card-title">Transition Table</span>
+      </div>
+      <div class="card-body" style="padding:12px;">
+        <div class="trans-table-wrap">
+          <table class="trans-table" id="transTable">
+            <thead>
+              <tr>
+                <th>State</th>
+                <th>Input</th>
+                <th>Stack</th>
+                <th>→ New State</th>
+                <th>Stack Op</th>
+              </tr>
+            </thead>
+            <tbody id="transTableBody">
+              <tr><td colspan="5" style="text-align:center;color:var(--ink-muted);padding:16px;">Select a language</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+  <main class="main-content">
+
+    <!-- §2 Input Controls -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-icon amber">⚙</div>
+        <span class="card-title">Configuration & Input</span>
+      </div>
+      <div class="card-body">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <div>
+            <div class="form-group">
+              <label class="form-label">Select Language</label>
+              <select class="form-select" id="languageSelect">
+                <option value="">— Choose a language —</option>
+                <option value="anbn">L₁ = { aⁿbⁿ | n ≥ 1 }</option>
+                <option value="balanced">L₂ = Balanced Parentheses- ()</option>
+                <option value="wcwr">L₃ = { wcwᴿ | w ∈ {a,b}* }</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Input String</label>
+              <input type="text" class="form-input" id="inputString" placeholder="Type input string..." />
+              <div class="example-btns" id="exampleBtns"></div>
+            </div>
+          </div>
+          <div>
+            <label class="form-label">Input Tape Preview</label>
+            <div class="input-display" id="inputDisplay">
+              <span style="font-size:0.78rem;color:var(--ink-muted);font-family:var(--font-mono);">— empty —</span>
+            </div>
+            <div style="margin-top:12px;">
+              <label class="form-label">Simulation Speed</label>
+              <input type="range" id="speedSlider" min="200" max="2000" value="800" step="100"
+                style="width:100%;accent-color:var(--accent-blue);" />
+              <div class="flex-between text-muted text-mono-sm" style="margin-top:3px;">
+                <span>Fast</span>
+                <span id="speedLabel">800ms</span>
+                <span>Slow</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr class="divider" />
+        <div class="controls-row" id="controlsRow">
+          <button class="btn btn-primary" id="btnStart" onclick="startSimulation()">▶ Start</button>
+          <button class="btn btn-secondary" id="btnStep" onclick="stepSimulation()" disabled>⏭ Next Step</button>
+          <button class="btn btn-success" id="btnAuto" onclick="toggleAutoPlay()" disabled>⚡ Auto Play</button>
+          <button class="btn btn-amber" id="btnPause" onclick="pauseSimulation()" disabled style="display:none;">⏸ Pause</button>
+          <button class="btn btn-danger" id="btnReset" onclick="resetSimulation()" disabled>↺ Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- §3 Simulation Panel -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-icon blue">▷</div>
+        <span class="card-title">Simulation</span>
+        <div style="margin-left:auto;">
+          <span class="step-counter" id="stepCounter">Step 0</span>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <!-- State diagram -->
+        <div class="states-diagram" id="statesDiagram">
+          <div style="color:var(--ink-muted);font-size:0.82rem;font-family:var(--font-mono);">
+            Select a language to see the state diagram
+          </div>
+        </div>
+
+        <!-- Current Transition -->
+        <div style="margin-bottom:10px;">
+          <div class="flex-between" style="margin-bottom:5px;">
+            <span class="text-mono-sm text-muted">Current Transition δ(q, a, Z) → (q′, γ)</span>
+          </div>
+          <div class="transition-box empty" id="transitionBox">
+            Waiting for simulation to start…
+          </div>
+        </div>
+
+        <!-- Step Explanation -->
+        <div>
+          <div class="text-mono-sm text-muted" style="margin-bottom:5px;">Step Explanation</div>
+          <div class="explanation-box" id="explanationBox">
+            Configure a language and input string, then press <strong>Start</strong> to begin simulation.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Stack + Log (side by side) -->
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:18px;">
+
+      <!-- §4 Stack Visualization -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-icon green">🗂</div>
+          <span class="card-title">Stack</span>
+        </div>
+        <div class="stack-container" id="stackContainer">
+          <div class="stack-top-label">▲ TOP</div>
+          <div class="stack-items" id="stackItems">
+            <div class="stack-empty-msg">Stack is empty</div>
+          </div>
+          <div class="stack-bottom-line"></div>
+          <div class="stack-size-badge" id="stackSizeBadge">0 items</div>
+        </div>
+      </div>
+
+      <!-- §5 Step Log -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-icon blue">📋</div>
+          <span class="card-title">Step Log</span>
+          <button onclick="clearLog()" class="btn btn-secondary" style="margin-left:auto;padding:3px 10px;font-size:0.75rem;">Clear</button>
+        </div>
+        <div class="card-body" style="padding:12px 14px;">
+          <div class="log-container" id="logContainer">
+            <div class="log-empty">No steps yet. Start the simulation.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- §6 Result -->
+    <div id="resultSection">
+      <div class="result-banner accepted" id="resultAccepted" style="display:none;">
+        <span class="result-icon">✅</span>
+        <div>
+          <div class="result-title">String Accepted</div>
+          <div class="result-detail" id="resultAcceptedDetail"></div>
+        </div>
+      </div>
+      <div class="result-banner rejected" id="resultRejected" style="display:none;">
+        <span class="result-icon">❌</span>
+        <div>
+          <div class="result-title">String Rejected</div>
+          <div class="result-detail" id="resultRejectedDetail"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
