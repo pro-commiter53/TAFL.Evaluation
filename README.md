@@ -3,7 +3,9 @@
 ## 👨‍💻 Author
 
 **HARSH**
+
 ROLL NO- **2024UCS1550**
+
 COURSE- Theory of Automata and Formal Languages
 
 ---
